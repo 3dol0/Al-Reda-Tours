@@ -12,10 +12,10 @@ A fully static, RTL‑first landing & booking site for an Egyptian tour operator
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
 [![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
 [![No Backend](https://img.shields.io/badge/Backend-None-success?style=flat-square)](#)
-[![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222?style=flat-square&logo=githubpages)](https://3dol0.github.io/Al-Reda-Tours/)
+[![Netlify](https://img.shields.io/badge/Deploy-Netlify-00C7B7?style=flat-square&logo=netlify&logoColor=white)](https://al-reda-tours.netlify.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
-### 🌐 [عرض مباشر · Live Demo](https://3dol0.github.io/Al-Reda-Tours/)
+### 🌐 [عرض مباشر · Live Demo](https://al-reda-tours.netlify.app/)
 
 </div>
 
@@ -71,8 +71,7 @@ Al-Reda-Tours/
 │   ├── fayom.jpg
 │   ├── port-said.jpg
 │   └── africano.jpg
-├── .github/workflows/
-│   └── deploy.yml          # نشر تلقائي على GitHub Pages
+├── netlify.toml             # إعدادات النشر والكاش وهيدرز الأمان
 ├── LICENSE
 └── README.md
 ```
@@ -106,10 +105,10 @@ npx serve .
 
 المشروع static بالكامل، فبيتنشر على أي استضافة ثابتة من غير أي إعدادات.
 
-**GitHub Pages (المُفعّل هنا):** فيه workflow جاهز في [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) بينشر تلقائياً مع كل push على `main`.
-لتفعيله لأول مرة: **Settings → Pages → Source: GitHub Actions**.
+**Netlify (المُفعّل هنا):** الموقع مربوط مباشرة بالريبو — أي push على `main` بيتنشر تلقائياً خلال ثواني.
+الإعدادات كلها في [`netlify.toml`](netlify.toml) — مفيش build command لأن الموقع static بالكامل.
 
-بدائل تشتغل بنفس السهولة: **Netlify**، **Vercel**، **Cloudflare Pages** — اسحب المجلد وخلاص.
+بدائل تشتغل بنفس السهولة: **Cloudflare Pages**، **Vercel**، **GitHub Pages** — مفيش أي خطوة بناء مطلوبة.
 
 ---
 
