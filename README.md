@@ -12,10 +12,11 @@ A fully static, RTL‑first landing & booking site for an Egyptian tour operator
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
 [![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
 [![No Backend](https://img.shields.io/badge/Backend-None-success?style=flat-square)](#)
-[![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222?style=flat-square&logo=githubpages)](https://3dol0.github.io/Al-Reda-Tours/)
+[![Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare_Pages-F38020?style=flat-square&logo=cloudflarepages&logoColor=white)](https://al-reda-tours.pages.dev/)
+[![GitHub Pages](https://img.shields.io/badge/Mirror-GitHub_Pages-222?style=flat-square&logo=githubpages)](https://3dol0.github.io/Al-Reda-Tours/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
-### 🌐 [عرض مباشر · Live Demo](https://3dol0.github.io/Al-Reda-Tours/)
+### 🌐 [عرض مباشر · Live Demo](https://al-reda-tours.pages.dev/)
 
 </div>
 
@@ -73,6 +74,7 @@ Al-Reda-Tours/
 │   └── africano.jpg
 ├── .github/workflows/
 │   └── deploy.yml          # نشر تلقائي على GitHub Pages
+├── _headers                 # كاش وهيدرز أمان لـ Cloudflare Pages
 ├── .nojekyll                # يمنع GitHub من معالجة الموقع بـ Jekyll
 ├── LICENSE
 └── README.md
@@ -107,9 +109,16 @@ npx serve .
 
 المشروع static بالكامل، فبيتنشر على أي استضافة ثابتة من غير أي إعدادات.
 
-الموقع منشور فعلياً على **GitHub Pages** من فرع `gh-pages`.
+الموقع منشور على **منصتين في نفس الوقت**، الاثنين من نفس الريبو:
 
-الـ workflow في [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) بيعمل mirror لـ `main` على `gh-pages` مع كل push — يعني **مفيش أي خطوة يدوية**؛ ادفع على `main` والموقع بيتحدّث خلال دقيقة.
+| المنصة | الرابط | الدور |
+|---|---|---|
+| **Cloudflare Pages** | <https://al-reda-tours.pages.dev> | الرابط الأساسي (canonical) |
+| **GitHub Pages** | <https://3dol0.github.io/Al-Reda-Tours/> | نسخة احتياطية |
+
+الاثنين بيتحدثوا تلقائياً مع كل push على `main` — **مفيش أي خطوة يدوية**. Cloudflare بيسحب من الريبو مباشرة، والـ workflow في [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) بيعمل mirror لـ `main` على `gh-pages`.
+
+إعدادات الكاش وهيدرز الأمان في [`_headers`](_headers).
 
 > ملاحظة: روابط GitHub Pages بتحتوي دائماً على اسم الحساب (`<account>.github.io/<repo>/`). لو عايز رابط من غير اسم الحساب، دوّر على **custom domain** أو استضافة بتسمّي المواقع باسم المشروع (Netlify / Cloudflare Pages / Vercel).
 

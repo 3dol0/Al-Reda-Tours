@@ -1,0 +1,22 @@
+# ══════════════════════════════════════════
+#  Cloudflare Pages — HTTP headers
+#  الموقع static بالكامل — مفيش build step
+# ══════════════════════════════════════════
+
+# الصور: كاش طويل (الأسماء ثابتة ومش بتتغير)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS/JS: يتراجع من السيرفر كل مرة عشان التحديثات تظهر فوراً
+/*.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# هيدرز أمان أساسية على كل الصفحات
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
