@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.sublime-*
+
+# Logs & temp
+*.log
+*.tmp
+*~
+
+# Dependencies (not used — this project has none)
+node_modules/
+
+# Env
+.env
+.env.*
