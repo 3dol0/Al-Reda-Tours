@@ -118,9 +118,19 @@ function submitBooking() {
   const msg = encodeURIComponent(
     `مرحباً، أنا ${name} \nعايز أحجز: ${currentTrip.icon} ${currentTrip.tripName}\nعدد الأفراد: ${count}\nرقم موبايلي: ${phone}${notes ? '\nملاحظات: ' + notes : ''}`
   );
-  document.getElementById('waLink').href = `https://wa.me/${CONFIG.waNumber}?text=${msg}`;
+  const waUrl = `https://wa.me/${CONFIG.waNumber}?text=${msg}`;
 
-  /* شاشة النجاح */
+  /* لينك احتياطي لو المتصفح منع الفتح التلقائي */
+  document.getElementById('waLink').href = waUrl;
+
+  /* تحويل مباشر على واتساب.
+     ملاحظة: ممنوع نمرر 'noopener' كـ window feature لأن المتصفح ساعتها
+     بيرجّع null حتى لو الفتح نجح — وكنا هنفتح واتساب مرتين. */
+  const waWin = window.open(waUrl, '_blank');
+  if (waWin) { waWin.opener = null; }
+  else       { window.location.href = waUrl; }
+
+  /* شاشة التأكيد — فيها زرار احتياطي لو واتساب ما اتفتحش */
   document.getElementById('modalFormSection').style.display = 'none';
   document.getElementById('modalSuccess').classList.add('show');
 }

@@ -134,7 +134,7 @@ npx serve .
 | تعديل برنامج رحلة | `index.html` → `.back-list` جوه كارت الرحلة |
 | إضافة رحلة جديدة | انسخ أي `.flip-wrapper` وعدّل محتواه + `openModal(...)` |
 | تغيير الألوان | `styles.css` → `:root` (`--red`, `--gold`, `--navy`) |
-| الشريط المتحرك أعلى الصفحة | `index.html` → `.eid-notice` |
+| نص زرار إرسال الحجز | `index.html` → `.submit-btn` |
 
 ---
 
