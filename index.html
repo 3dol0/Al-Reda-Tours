@@ -36,6 +36,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 
+<!-- ══ MOTION FLAG: بيتحط بدري عشان العناصر ماتظهرش وتختفي قبل الأنيميشن ══ -->
+<script>
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('motion-ready');
+  /* أمان: لو script.js ما اشتغلش، نرجّع كل المحتوى ظاهر */
+  setTimeout(function () {
+    if (!window.motionStarted) document.documentElement.classList.remove('motion-ready');
+  }, 4000);
+}
+</script>
+
 <!-- ══ STRUCTURED DATA ══ -->
 <script type="application/ld+json">
 {
@@ -85,13 +96,71 @@
     <li><a href="#location">موقعنا</a></li>
     <li><a href="tel:01007079906" class="nav-cta">📞 احجز دلوقتي</a></li>
   </ul>
+
+  <!-- ══ SCROLL PROGRESS: شريط دهبي بيتملى مع السكرول ══ -->
+  <div class="scroll-progress" aria-hidden="true"></div>
 </nav>
 
 
 <!-- ══ HERO ══ -->
-<section class="hero">
+<section class="hero" data-scroll="top">
+
+  <!-- ══ HERO SCENE: مشهد صحرا بطبقات SVG (بيتحرك مع السكرول والماوس)
+       على الديسكتوب بيتبدّل بمشهد WebGL من hero3d.js ══ -->
+  <div class="hero-scene" aria-hidden="true">
+    <div class="scene-stars"></div>
+    <svg class="scene-layer scene-sun" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <radialGradient id="sunGlow">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity=".95"/>
+          <stop offset=".22" stop-color="#f5a742" stop-opacity=".55"/>
+          <stop offset="1" stop-color="#D42B2B" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="800" cy="300" r="300" fill="url(#sunGlow)"/>
+      <circle cx="800" cy="300" r="62" fill="#ffc45e"/>
+    </svg>
+    <svg class="scene-layer scene-far" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">
+      <polygon points="250,300 470,60 505,300" fill="#1d2758"/>
+      <polygon points="505,300 470,60 690,300" fill="#111940"/>
+      <polyline points="470,60 690,300" fill="none" stroke="#C8960A" stroke-opacity=".55" stroke-width="2"/>
+      <polygon points="1060,300 900,120 930,300" fill="#1d2758"/>
+      <polygon points="930,300 900,120 740,300" fill="#111940"/>
+      <polyline points="900,120 740,300" fill="none" stroke="#C8960A" stroke-opacity=".55" stroke-width="2"/>
+      <polygon points="1060,300 1140,205 1150,300" fill="#1d2758"/>
+      <polygon points="1150,300 1140,205 1220,300" fill="#111940"/>
+      <rect x="0" y="296" width="1440" height="24" fill="#0e1533"/>
+    </svg>
+    <svg class="scene-layer scene-near" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice">
+      <path d="M0,120 C200,70 380,150 620,110 C860,70 1040,140 1260,100 C1340,86 1400,95 1440,100 L1440,200 L0,200 Z" fill="#0b1129"/>
+      <path d="M0,120 C200,70 380,150 620,110 C860,70 1040,140 1260,100 C1340,86 1400,95 1440,100" fill="none" stroke="#C8960A" stroke-opacity=".3" stroke-width="2"/>
+    </svg>
+    <svg class="scene-layer scene-front" viewBox="0 0 1440 160" preserveAspectRatio="xMidYMax slice">
+      <path d="M0,70 C300,40 560,95 820,72 C1080,50 1280,85 1440,64 L1440,160 L0,160 Z" fill="#070c1f"/>
+      <rect x="0" y="122" width="1440" height="14" fill="#0e1537"/>
+      <line x1="0" y1="129" x2="1440" y2="129" stroke="#C8960A" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="18 14"/>
+      <g transform="translate(900 77)">
+        <g class="scene-bus">
+          <g class="bus-bob">
+            <polygon points="0,26 -70,14 -70,40" fill="#ffd27a" opacity=".18"/>
+            <rect x="0" y="0" width="110" height="36" rx="8" fill="#D42B2B"/>
+            <rect x="0" y="23" width="110" height="4" fill="#C8960A"/>
+            <rect x="6" y="6" width="18" height="14" rx="3" fill="#bfe3ff" opacity=".9"/>
+            <rect x="30" y="6" width="14" height="12" rx="2" fill="#dff0ff" opacity=".75"/>
+            <rect x="49" y="6" width="14" height="12" rx="2" fill="#dff0ff" opacity=".75"/>
+            <rect x="68" y="6" width="14" height="12" rx="2" fill="#dff0ff" opacity=".75"/>
+            <rect x="87" y="6" width="14" height="12" rx="2" fill="#dff0ff" opacity=".75"/>
+            <circle cx="3" cy="29" r="2.5" fill="#ffe9a8"/>
+            <circle cx="24" cy="38" r="7" fill="#0b0f1f" stroke="#555" stroke-width="2"/>
+            <circle cx="88" cy="38" r="7" fill="#0b0f1f" stroke="#555" stroke-width="2"/>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+
   <div class="hero-inner">
-    <h1>أسعارنا <span class="gold">حلوة</span><br>ورحلاتنا أحلى</h1>
+    <h1><span class="hl">أسعارنا <span class="gold">حلوة</span></span><br><span class="hl">ورحلاتنا أحلى</span></h1>
     <div class="hero-slogan">♦️ اللي مجربش يطلع معانا فايته كتير ♦️</div>
     <p class="hero-sub">رحلات منظمة لكل مكان في مصر — للعائلة والأصحاب 👨‍👩‍👧‍👦❤️</p>
     <div class="hero-btns">
@@ -99,9 +168,9 @@
       <a href="tel:01007079906" class="btn-out">📞 01007079906</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">6</span><span class="stat-lbl">رحلات متنوعة</span></div>
-      <div class="stat"><span class="stat-num">5</span><span class="stat-lbl">وجهات مميزة</span></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">أمان وراحة</span></div>
+      <div class="stat"><span class="stat-num" data-count="6">6</span><span class="stat-lbl">رحلات متنوعة</span></div>
+      <div class="stat"><span class="stat-num" data-count="5">5</span><span class="stat-lbl">وجهات مميزة</span></div>
+      <div class="stat"><span class="stat-num" data-count="100" data-suffix="%">100%</span><span class="stat-lbl">أمان وراحة</span></div>
       <div class="stat"><span class="stat-num">🚌</span><span class="stat-lbl">أتوبيسات مكيفة جديدة</span></div>
     </div>
   </div>
@@ -116,23 +185,44 @@
 </div>
 
 <!-- ══ HOW TO BOOK ══ -->
-<section class="book" id="book">
-  <div class="sec-hd">
+<section class="book" id="book" data-scroll>
+  <div class="sec-hd" data-reveal="rise">
     <div class="stag">📋 طريقة الحجز</div>
     <h2>احجز في ٤ خطوات بسيطة</h2>
     <p></p>
   </div>
+
+  <!-- ══ BOOK ROAD: أتوبيس بيمشي على الطريق مع السكرول وبينوّر الخطوات ══ -->
+  <div class="book-road" aria-hidden="true">
+    <div class="road-line"></div>
+    <div class="road-track">
+      <div class="road-mover">
+        <svg class="road-bus" viewBox="0 0 110 46">
+          <rect x="0" y="0" width="110" height="36" rx="8" fill="#D42B2B"/>
+          <rect x="0" y="23" width="110" height="4" fill="#C8960A"/>
+          <rect x="6" y="6" width="18" height="14" rx="3" fill="#bfe3ff"/>
+          <rect x="30" y="6" width="14" height="12" rx="2" fill="#fff" opacity=".85"/>
+          <rect x="49" y="6" width="14" height="12" rx="2" fill="#fff" opacity=".85"/>
+          <rect x="68" y="6" width="14" height="12" rx="2" fill="#fff" opacity=".85"/>
+          <rect x="87" y="6" width="14" height="12" rx="2" fill="#fff" opacity=".85"/>
+          <circle cx="24" cy="38" r="7" fill="#1A2557"/>
+          <circle cx="88" cy="38" r="7" fill="#1A2557"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
   <div class="book-grid">
-    <div class="book-step"><div class="step-num">١</div><h4>اختار الرحلة</h4><p>اضغط "احجز الآن" على الرحلة اللي عجباك</p></div>
-    <div class="book-step"><div class="step-num">٢</div><h4>ادخل بياناتك</h4><p>اسمك ورقم موبايلك وعدد المقاعد المطلوبة</p></div>
-    <div class="book-step"><div class="step-num">٣</div><h4>تواصل واتساب</h4><p>هيظهرلك لينك واتساب مباشر لتأكيد الحجز ودفع المقدم</p></div>
-    <div class="book-step"><div class="step-num">٤</div><h4>استنى الأتوبيس</h4><p>بنتحرك من المنصورة عند فندق رامادا أو بالتنسيق</p></div>
+    <div class="book-step" data-reveal="flip"><div class="step-num">١</div><h4>اختار الرحلة</h4><p>اضغط "احجز الآن" على الرحلة اللي عجباك</p></div>
+    <div class="book-step" data-reveal="flip"><div class="step-num">٢</div><h4>ادخل بياناتك</h4><p>اسمك ورقم موبايلك وعدد المقاعد المطلوبة</p></div>
+    <div class="book-step" data-reveal="flip"><div class="step-num">٣</div><h4>تواصل واتساب</h4><p>هيظهرلك لينك واتساب مباشر لتأكيد الحجز ودفع المقدم</p></div>
+    <div class="book-step" data-reveal="flip"><div class="step-num">٤</div><h4>استنى الأتوبيس</h4><p>بنتحرك من المنصورة عند فندق رامادا أو بالتنسيق</p></div>
   </div>
 </section>
 
 <!-- ══ TRIPS ══ -->
 <section class="trips" id="trips">
-  <div class="sec-hd">
+  <div class="sec-hd" data-reveal="rise">
     <div class="stag">🗺️ رحلاتنا</div>
     <h2>اختار رحلتك</h2>
     <p>حرّك الماوس على الكارت عشان تشوف برنامج الرحلة — واضغط احجز الآن 👇</p>
@@ -140,7 +230,7 @@
   <div class="trips-grid">
 
     <!-- ══ CARD 1: المتحف الجديد ══ -->
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -182,7 +272,7 @@
     </div>
 
     <!-- ══ CARD 3: الإسكندرية ══ -->
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -222,7 +312,7 @@
     </div>
 
     <!-- ══ CARD 4: الفيوم ══ -->
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -263,7 +353,7 @@
     </div>
 
     <!-- ══ CARD 5: بورسعيد ══ -->
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -304,7 +394,7 @@
     </div>
 
     <!-- ══ CARD 6: أفريكانو ══ -->
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -343,7 +433,7 @@
       </div>
     </div>
 
-    <div class="flip-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="flip-wrapper" data-reveal="deal" onclick="this.classList.toggle('flipped')">
       <div class="flip-inner">
         <div class="flip-front">
           <div class="card-img">
@@ -392,26 +482,26 @@
 
 <!-- ══ WHY ══ -->
 <section class="why" id="why">
-  <div class="sec-hd">
+  <div class="sec-hd" data-reveal="rise">
     <div class="stag">⭐ ليه الرضا؟</div>
     <h2>ضمان رحلة مثالية</h2>
     <p>بنقدم أكتر من مجرد رحلة… بنقدم ذكريات لا تُنسى</p>
   </div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-icon wi-r">🚌</div><h3>أتوبيسات مكيفة جديدة</h3><p>أتوبيسات حديثة مكيفة بشاحن لكل كرسي وراحة تامة طوال الطريق</p></div>
-    <div class="why-card"><div class="why-icon wi-g">💰</div><h3>أسعار حلوة ومناسبة</h3><p>أفضل الأسعار مع جودة عالية وبدون أي تكاليف مخفية</p></div>
-    <div class="why-card"><div class="why-icon wi-b">👨‍👩‍👧‍👦</div><h3>رحلات لكل العيلة</h3><p>برامج للكبار والصغار — متعة وأمان مع أحبابك في الإجازة</p></div>
-    <div class="why-card"><div class="why-icon wi-gr">📲</div><h3>دعم مستمر</h3><p>مشرف مع كل رحلة وفريق متاح على الواتساب في أي وقت</p></div>
+    <div class="why-card" data-reveal="flip"><div class="why-icon wi-r">🚌</div><h3>أتوبيسات مكيفة جديدة</h3><p>أتوبيسات حديثة مكيفة بشاحن لكل كرسي وراحة تامة طوال الطريق</p></div>
+    <div class="why-card" data-reveal="flip"><div class="why-icon wi-g">💰</div><h3>أسعار حلوة ومناسبة</h3><p>أفضل الأسعار مع جودة عالية وبدون أي تكاليف مخفية</p></div>
+    <div class="why-card" data-reveal="flip"><div class="why-icon wi-b">👨‍👩‍👧‍👦</div><h3>رحلات لكل العيلة</h3><p>برامج للكبار والصغار — متعة وأمان مع أحبابك في الإجازة</p></div>
+    <div class="why-card" data-reveal="flip"><div class="why-icon wi-gr">📲</div><h3>دعم مستمر</h3><p>مشرف مع كل رحلة وفريق متاح على الواتساب في أي وقت</p></div>
   </div>
 </section>
 
 <!-- ══ LOCATION ══ -->
 <section class="location" id="location">
-  <div class="sec-hd">
+  <div class="sec-hd" data-reveal="rise">
     <div class="stag">📍 موقعنا</div>
     <h2>هتلاقينا هنا</h2>
   </div>
-  <div class="loc-box">
+  <div class="loc-box" data-reveal="unfold">
     <div class="loc-info">
       <h3>معلومات التواصل والتحرك</h3>
       <div class="loc-row"><div class="icon">📌</div><div class="info"><label>مقر الشركة</label><span>المنصورة — طلخا — شارع العراقي</span></div></div>
@@ -429,8 +519,12 @@
 </section>
 
 <!-- ══ CTA ══ -->
-<section class="cta">
-  <h2>مستني إيه؟ احجز دلوقتي! 🎉</h2>
+<section class="cta" data-scroll>
+  <!-- ══ CTA PLANE: طيارة بتعدّي الشاشة مع السكرول ══ -->
+  <div class="cta-plane" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path transform="rotate(-90 12 12)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+  </div>
+  <h2 data-reveal="zoom">مستني إيه؟ احجز دلوقتي! 🎉</h2>
   <p>تواصل معنا وهنرتبلك أجمل رحلة ❤️</p>
   <div class="cta-phones">
     <a href="tel:01007079906" class="cta-phone">📞 &nbsp; 01007079906</a>

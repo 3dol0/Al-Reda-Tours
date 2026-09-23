@@ -6,7 +6,7 @@
 
 **موقع تعريفي وحجز لشركة رحلات في المنصورة — مبني بالكامل بـ Front‑End، من غير أي باك‑إند.**
 
-A fully static, RTL‑first landing & booking site for an Egyptian tour operator — no backend, no build step, no dependencies.
+A fully static, RTL‑first landing & booking site for an Egyptian tour operator — no backend, no build step, nothing to install.
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](#)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
@@ -34,14 +34,16 @@ A fully static, RTL‑first landing & booking site for an Egyptian tour operator
 
 | | |
 |---|---|
+| 🌄 **هيرو ثلاثي الأبعاد** | مشهد WebGL بـ Three.js (أهرامات وكثبان وغروب ورمل طاير) الكاميرا بتتحرك فيه مع السكرول والماوس — على الموبايل بيتبدّل بمشهد SVG بطبقات parallax أخف |
+| 🎢 **حركة 3D مع السكرول** | العناصر بتظهر بحركة 3D، أتوبيس بيمشي على طريق خطوات الحجز وبينوّرها، كروت بتميل ناحية الماوس بلمعة، طيارة بتعدّي الـ CTA، وشريط تقدّم في الـ nav |
 | 🎴 **كروت رحلات ثلاثية الأبعاد** | Flip cards تكشف برنامج كل رحلة بحركة 3D — وبتشتغل بالضغط على الموبايل وبالـ hover على الديسكتوب |
 | 📝 **نظام حجز بالكامل من غير سيرفر** | Modal للحجز مع تحقق من المدخلات، حفظ في `localStorage`، وتحويل لواتساب برسالة جاهزة |
 | 💬 **تكامل واتساب مباشر** | `wa.me` deep link بيتولد ديناميكياً من بيانات الحجز — الوسيلة الأنسب للسوق المصري |
 | 🌍 **RTL عربي أصيل** | التخطيط كله `dir="rtl"` بخط Cairo، مع ضبط الاتجاه للأرقام والهواتف |
 | 📱 **متجاوب بالكامل** | من 320px للشاشات الكبيرة، مع قائمة hamburger على الموبايل |
 | 🔍 **SEO + مشاركة اجتماعية** | Open Graph و Twitter Cards و JSON‑LD (`TravelAgency` schema) — الرابط بيظهر بمعاينة كاملة على واتساب وفيسبوك |
-| ♿ **إمكانية وصول** | `aria-*` على العناصر التفاعلية، focus rings واضحة، ودعم `prefers-reduced-motion` |
-| ⚡ **أداء** | صفر dependencies، صفر build step، صور بـ `loading="lazy"` |
+| ♿ **إمكانية وصول** | `aria-*` على العناصر التفاعلية، focus rings واضحة، ودعم `prefers-reduced-motion` (بيوقف كل الحركة ومشهد الـ WebGL) |
+| ⚡ **أداء** | صفر build step، صور بـ `loading="lazy"`، سكرول listener واحد بـ `requestAnimationFrame`، ومشهد الـ WebGL بيتحمّل بعد الصفحة (ديسكتوب بس) وبيقف لما يخرج من الشاشة |
 
 ---
 
@@ -49,11 +51,12 @@ A fully static, RTL‑first landing & booking site for an Egyptian tour operator
 
 - **HTML5** — بنية دلالية، RTL، وبيانات منظمة (JSON‑LD)
 - **CSS3** — Custom Properties، Grid، Flexbox، 3D transforms، media queries
-- **Vanilla JavaScript (ES6+)** — من غير أي مكتبات أو أطر عمل
+- **Vanilla JavaScript (ES6+)** — من غير أطر عمل
+- **Three.js** (r170 من jsDelivr CDN) — مشهد الهيرو الـ 3D على الديسكتوب بس، بيتحمّل بـ dynamic `import()`
 - **Web Storage API** — `localStorage` كطبقة تخزين محلية بديلة عن الداتابيز
 - **Google Fonts** — خط Cairo
 
-> **صفر dependencies · صفر build tools · صفر باك‑إند.** الموقع كله ٣ ملفات + مجلد صور.
+> **صفر تثبيت · صفر build tools · صفر باك‑إند.** الموقع كله ٤ ملفات + مجلد صور — Three.js بس بيتحمّل من CDN على الديسكتوب، ولو مش متاح المشهد الـ SVG بيفضل شغال.
 
 ---
 
@@ -63,7 +66,8 @@ A fully static, RTL‑first landing & booking site for an Egyptian tour operator
 Al-Reda-Tours/
 ├── index.html              # الصفحة الكاملة (nav, hero, trips, booking modal, footer)
 ├── styles.css              # كل التنسيقات — متغيرات CSS، responsive، animations
-├── script.js               # منطق الحجز، القائمة، وتخزين localStorage
+├── script.js               # منطق الحجز، القائمة، تخزين localStorage، ومحرّك حركة السكرول
+├── hero3d.js               # مشهد WebGL للهيرو (Three.js) — ديسكتوب بس
 ├── assets/
 │   ├── logo.jpg            # الشعار (بيُستخدم كمان كـ favicon و og:image)
 │   ├── museum.jpg          # صور الرحلات
@@ -91,7 +95,7 @@ git clone https://github.com/3dol0/Al-Reda-Tours.git
 cd Al-Reda-Tours
 ```
 
-ثم افتح `index.html` في المتصفح مباشرة، أو شغّل سيرفر محلي بسيط (مفضّل عشان الخطوط والمسارات):
+ثم افتح `index.html` في المتصفح مباشرة، أو شغّل سيرفر محلي بسيط (مفضّل — مشهد الـ WebGL محتاج سيرفر لأن الـ ES modules مابتشتغلش من `file://`):
 
 ```bash
 # Python
